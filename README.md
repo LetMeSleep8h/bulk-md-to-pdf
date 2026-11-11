@@ -6,7 +6,7 @@ This Python script converts all Markdown (`.md`) files in a specified folder int
 
 - **Converts Markdown files to PDF**: Each `.md` file in the folder is converted to a PDF.
 - **Merges PDFs**: Combines all individual PDFs into a single merged PDF file.
-- **Clean up**: Optionally deletes individual PDFs after merging.
+- Individual PDFs stay alongside their Markdown sources.
 
 ## Requirements
 
@@ -28,43 +28,26 @@ This Python script converts all Markdown (`.md`) files in a specified folder int
 2. **Install wkhtmltopdf**:
    - Download `wkhtmltopdf` from the official website: [https://wkhtmltopdf.org/downloads.html](https://wkhtmltopdf.org/downloads.html)
    - Follow the installation instructions for your OS.
-   - Note the installation path (e.g., `C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe` on Windows) as you will need it to configure the script.
-
-## Configuration
-
-1. Open the script and ensure that the path to `wkhtmltopdf` is correctly specified:
-
-    ```python
-    path_wkhtmltopdf = "C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe"  # Adjust this if needed
-    ```
-
-2. Set the folder path containing your `.md` files and the output path for the merged PDF in the `main()` function:
-
-    ```python
-    folder_path = 'C:/Users/user/Documents/Obsidian Vault/- Second Year/CSCI 243'  # Your folder with .md files
-    output_pdf = 'C:/Users/user/Desktop/output/merged_output.pdf'                   # Path for the merged output PDF
-    ```
 
 ## Usage
 
-1. Run the script with Python:
+Run the script with the input folder and the path to the merged PDF. Quote paths that contain spaces.
 
-    ```bash
-    python main.py
-    ```
+```bash
+python main.py "path/to/Markdown notes" "path/to/merged output.pdf"
+```
 
-2. The script will:
-   - Find all `.md` files in the specified folder.
-   - Convert each `.md` file to an individual PDF.
-   - Merge all individual PDFs into a single PDF named `merged_output.pdf` (or as specified in `output_pdf`).
-   - Delete the individual PDFs (optional step in the script).
+If `wkhtmltopdf` is outside your `PATH`, provide its executable path.
 
-3. The merged PDF will be saved at the location specified in `output_pdf`.
+```bash
+python main.py "path/to/Markdown notes" "path/to/merged output.pdf" --wkhtmltopdf "/path/to/wkhtmltopdf"
+```
+
+The output folder must exist. Individual PDFs stay in the input folder, so choose a merged filename that differs from them.
 
 ## Troubleshooting
 
-- **FileNotFoundError with wkhtmltopdf**:
-  Ensure that `wkhtmltopdf` is installed and the path in `path_wkhtmltopdf` is correct.
+- If the executable is unavailable, install `wkhtmltopdf`, add it to `PATH`, or supply its executable path with `--wkhtmltopdf`.
 - **Permission Errors**:
   Check that you have the necessary permissions for the folder where PDFs are saved.
 
@@ -75,4 +58,4 @@ If your folder contains:
 - `notes2.md`
 - `summary.md`
 
-Running this script will create a single PDF named `merged_output.pdf` that combines the content of these Markdown files.
+Passing this folder and `merged_output.pdf` as the two arguments creates a merged PDF containing the three documents.
